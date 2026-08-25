@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cream: #F4EFE7;
+    --cream-50: #FAF7F2;
+    --cream-200: #EFE6DB;
+    --charcoal: #191817;
+    --charcoal-800: #2A2826;
+    --charcoal-600: #55524E;
+    --charcoal-400: #96918B;
+    --burnt-orange: #C86432;
+    --burnt-orange-hover: #B35527;
+    --burnt-orange-light: #F5E8E1;
+    --sand: #E9E0D5;
+    --sand-50: #F8F5F1;
+    --sand-200: #DDD1C3;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--charcoal);
+    font-family: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #C86432;
+    color: #FFFFFF;
+  }
+}
+
+/* Editorial Typography */
+.font-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.font-editorial-signature {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle background grain simulation */
+.bg-grain {
+  background-image: radial-gradient(rgba(25, 24, 23, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom smooth transitions */
+.transition-editorial {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-duration: 350ms;
+}
+
+/* Clean minimal scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DDD1C3;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #BFBAB3;
+}
