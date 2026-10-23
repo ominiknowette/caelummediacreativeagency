@@ -1,77 +1,22 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
-import { HeroSection } from '@/components/HeroSection';
-import { ProfileHeader } from '@/components/ProfileHeader';
-import { ServiceList } from '@/components/ServiceList';
-import { ContactSocials } from '@/components/ContactSocials';
-import { ShareBottomSheet } from '@/components/ShareBottomSheet';
-import { DirectInquiryModal } from '@/components/DirectInquiryModal';
-import { CreatorProfile, Service } from '@/types';
-import { getProfile, getServices } from '@/lib/storage';
-import { INITIAL_PROFILE, INITIAL_SERVICES } from '@/data/mockData';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import { SiteShell, ServiceCard, MediaTrack, TestimonialCarousel, ClosingContact } from '@/components/site';
+import { ResultCard } from '@/components/result-card';
+import { DecorativePattern } from '@/components/decorative-pattern';
+import { brand, bookingHref, services, testimonials } from '@/data/caelum';
+import { homepageResultSlugs, results } from '@/data/results';
 
 export default function HomePage() {
-  const [profile, setProfile] = useState<CreatorProfile>(INITIAL_PROFILE);
-  const [services, setServices] = useState<Service[]>(INITIAL_SERVICES);
-  const [shareOpen, setShareOpen] = useState(false);
-  const [inquiryOpen, setInquiryOpen] = useState(false);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [profData, servData] = await Promise.all([
-          getProfile(),
-          getServices(),
-        ]);
-        if (profData) setProfile(profData);
-        if (servData && servData.length > 0) setServices(servData);
-      } catch (err) {
-        console.error('Error loading data', err);
-      }
-    }
-    loadData();
-  }, []);
-
-  return (
-    <div className="w-full flex flex-col min-h-screen">
-      {/* 1. Hero with Banner and Circular Arch Portrait */}
-      <HeroSection
-        bannerUrl={profile.heroBannerUrl}
-        avatarUrl={profile.avatarUrl}
-        creatorName={profile.name}
-        onOpenShare={() => setShareOpen(true)}
-      />
-
-      {/* 2. Editorial Profile Header */}
-      <ProfileHeader profile={profile} />
-
-      {/* 3. Numbered Dynamic Services List */}
-      <div className="w-full mt-1">
-        <ServiceList services={services} />
-      </div>
-
-      {/* 4. Socials & Custom Inquiry CTA Section */}
-      <div className="w-full mt-auto">
-        <ContactSocials
-          profile={profile}
-          onOpenInquiry={() => setInquiryOpen(true)}
-        />
-      </div>
-
-      {/* 5. Share Bottom Sheet Drawer */}
-      <ShareBottomSheet
-        isOpen={shareOpen}
-        onClose={() => setShareOpen(false)}
-        title={`${profile.name} · ${profile.title}`}
-      />
-
-      {/* 6. Custom Service Request Modal */}
-      <DirectInquiryModal
-        isOpen={inquiryOpen}
-        onClose={() => setInquiryOpen(false)}
-        creatorEmail={profile.email}
-      />
-    </div>
-  );
+  return <SiteShell>
+    <section className="hero container">
+      <DecorativePattern variant="hero" />
+      <h1>Your brand deserves<br /><em>a stronger</em><br />digital presence</h1>
+      <div className="hero-bottom"><p>{brand.heroCopy}</p><Link className="button" href={bookingHref}>BOOK A CALL <ArrowUpRight size={18}/></Link></div>
+    </section>
+    <MediaTrack />
+    <section className="section container" id="services"><div className="section-heading"><h2>Our Services</h2></div><div className="card-grid three">{services.map(s=><ServiceCard key={s.id} service={s}/>)}</div><div className="center-action"><Link href="/services" className="button button-outline">VIEW ALL SERVICES <ArrowUpRight size={17}/></Link></div></section>
+    <section className="about-intro section container"><h2>Who We Are</h2><p>{brand.aboutDraft}</p><Link href="/about" className="button">ABOUT CAELUM MEDIA <ArrowUpRight size={17}/></Link></section>
+    <section className="section container homepage-results"><div className="section-heading"><h2>Selected Results</h2></div><div className="results-grid home-results-grid">{homepageResultSlugs.map(slug=>{const item=results.find(result=>result.slug===slug);return item?<ResultCard key={slug} result={item} compact/>:null})}</div><div className="center-action"><Link href="/portfolio" className="button button-outline">VIEW WORK & RESULTS <ArrowUpRight size={17}/></Link></div></section>
+    {testimonials.length > 0 && <TestimonialCarousel items={testimonials}/>}<ClosingContact />
+  </SiteShell>;
 }

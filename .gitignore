@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# dev artifacts & audit logs
+screenshots/
+assets/
+scripts/
+audit-*.json
+*.log

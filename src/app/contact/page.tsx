@@ -1,0 +1,8 @@
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import { SiteShell } from '@/components/site';
+import { ContactForm } from '@/components/contact-form';
+import { brand } from '@/data/caelum';
+import { Mail, Phone } from 'lucide-react';
+export const metadata:Metadata={title:'Contact',description:'Tell Caelum Media about your brand and enquire about services or packages.'};
+export default function Page(){return <SiteShell><section className="page-hero container"><h1>Let’s talk about<br/>your brand</h1><p>Tell us what you are working on and the support you need. An enquiry does not schedule a call; we will agree the next step with you.</p></section><section className="container section compact contact-layout"><div><h2>Start a conversation</h2><p>Choose a service and share your goals. We will confirm scope and timing before any booking.</p><div className="contact-methods"><a href={brand.whatsapp} target="_blank" rel="noopener noreferrer"><img src="/icons/whatsapp.svg" alt="" aria-hidden="true"/>Chat on WhatsApp</a><a href={`mailto:${brand.email}`}><Mail size={19} aria-hidden="true"/>{brand.email}</a><a href={brand.phoneHref}><Phone size={19} aria-hidden="true"/>{brand.phoneInternational}</a><a href={brand.social.instagram} target="_blank" rel="noopener noreferrer"><img src="/icons/instagram.svg" alt="" aria-hidden="true"/>Instagram · @caelum_media</a><a href={brand.social.facebook} target="_blank" rel="noopener noreferrer"><img src="/icons/facebook.svg" alt="" aria-hidden="true"/>Facebook</a></div></div><Suspense fallback={<p>Loading form…</p>}><ContactForm/></Suspense></section></SiteShell>}

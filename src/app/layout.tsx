@@ -1,52 +1,17 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Manrope } from 'next/font/google';
 import './globals.css';
-import { NoiseTexture } from '@/components/NoiseTexture';
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-cormorant',
-  display: 'swap',
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-manrope',
-  display: 'swap',
-});
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  themeColor: '#F4EFE7',
-};
-
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#ffffff' };
+const publicSiteUrl = process.env.CAELUM_PUBLIC_SITE_URL;
 export const metadata: Metadata = {
-  title: 'Amara Vance · Social Media & Content Director',
-  description: 'Editorial social media strategies, mobile videography, and creative direction for luxury and lifestyle brands.',
-  openGraph: {
-    title: 'Amara Vance · Social Media & Content Director',
-    description: 'Editorial social media strategies, mobile videography, and creative direction.',
-    type: 'website',
-  },
+  title: { default: 'Caelum Media | Creative strategy & content', template: '%s | Caelum Media' },
+  description: 'Social media management, content production, growth marketing and brand strategy for businesses ready to strengthen their digital presence.',
+  icons: { icon: '/brand/caelum-media-logo.png' },
+  ...(publicSiteUrl ? { metadataBase: new URL(publicSiteUrl) } : {}),
+  openGraph: { type: 'website', title: 'Caelum Media', description: 'Strategy, content and growth for ambitious brands.', ...(publicSiteUrl ? { images: [{ url: '/brand/caelum-media-logo.png', width: 1024, height: 1024, alt: 'Caelum Media Creative Agency logo' }] } : {}) },
+  robots: { index: false, follow: false },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
-      <body className="min-h-screen bg-cream text-charcoal selection:bg-burntOrange selection:text-white relative font-sans antialiased">
-        <NoiseTexture />
-        <div className="relative z-10 mx-auto max-w-[560px] md:max-w-[720px] lg:max-w-[880px] min-h-screen bg-cream shadow-subtle border-x border-sand/40 flex flex-col justify-between">
-          <main className="flex-1 w-full">{children}</main>
-        </div>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <html lang="en-GB"><body>{children}</body></html>;
 }

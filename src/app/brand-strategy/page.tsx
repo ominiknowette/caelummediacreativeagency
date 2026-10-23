@@ -1,0 +1,7 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { SiteShell, SectionBadge, ClosingContact } from '@/components/site';
+import { brandStrategy, money, packageWhatsAppHref } from '@/data/caelum';
+export const metadata:Metadata={title:'Brand Strategy',description:'Explore nine Caelum Media Brand Strategy services and their service fees.'};
+export default function Page(){return <SiteShell><section className="page-hero container"><SectionBadge>Find your direction</SectionBadge><h1>Brand Strategy</h1><p>Focused services to help you clarify how your brand is positioned and communicated.</p></section><section className="container section compact"><div className="card-grid three">{brandStrategy.map(item=><article className="card strategy-card" key={item.id}><h2>{item.title}</h2><div className="price">{money(item.price)}<small> Service fee</small></div>{'duration' in item&&<p>{item.duration}</p>}<Link className="card-button" href={`/contact?service=brand-strategy&package=${item.id}`}>ENQUIRE ABOUT THIS SERVICE <ArrowRight size={17}/></Link><a className="secondary-card-link" href={packageWhatsAppHref(item.title)} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></article>)}</div><p className="content-note">Scope and delivery schedule are agreed after confirmation. Only the Brand Discovery Session has a stated duration.</p></section><ClosingContact/></SiteShell>}
